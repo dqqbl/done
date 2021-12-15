@@ -1,0 +1,9 @@
+{
+  "eslint.validate": [
+    "javascript", // js
+    "javascriptreact", // jsx
+    "typescript", // ts
+    "typescriptreact", // tsx
+    "jsonc" // json
+  ],
+}
