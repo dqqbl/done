@@ -24,11 +24,23 @@ const prodConf = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: ["postcss-preset-env"],
+                plugins: [
+                  "postcss-preset-env",
+                  require("postcss-normalize")({
+                    forceImport: "sanitize.css",
+                  }),
+                ],
               },
             },
           },
-          "less-loader",
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                globalVars: theme,
+              },
+            },
+          },
         ],
       },
       {

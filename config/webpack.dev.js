@@ -1,6 +1,9 @@
 const { merge } = require("webpack-merge");
 const commonConf = require("./webpack.common");
 const theme = require("../theme");
+// const demo = require("../demo.js");
+// import demoColor from "../demo.js";
+// console.log(demoColor);
 
 const devConf = {
   mode: "development",
@@ -36,7 +39,14 @@ const devConf = {
               },
             },
           },
-          "less-loader",
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                globalVars: theme,
+              },
+            },
+          },
         ],
       },
       {

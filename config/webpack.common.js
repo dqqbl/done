@@ -5,7 +5,7 @@ module.exports = {
   /** 告知 webpack 使用相应模式的内置优化,'none' | 'development' | 'production' */
   mode: "production",
   /** webpack打包入口 */
-  entry: path.join(__dirname, "../src/index.tsx"),
+  entry: path.join(__dirname, "../src/app.tsx"),
   /** 打包输出 */
   output: {
     // 输出目录

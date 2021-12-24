@@ -24,5 +24,7 @@ module.exports = {
   // 全局变量
   globals: {},
   // 规则配置
-  rules: {},
+  rules: {
+    "react/react-in-jsx-scope": "off",
+  },
 };
