@@ -21,6 +21,9 @@ const devConf = {
             options: {
               modules: {
                 localIdentName: "[local]__[hash:base64:5]",
+                exportLocalsConvention: "dashes", // Only dashes in class names will be camelized
+                // namedExport: true,
+                // localsConvention: "camelCase",
               },
             },
           },

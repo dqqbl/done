@@ -17,6 +17,7 @@ const prodConf = {
             options: {
               modules: {
                 localIdentName: "[local]__[hash:base64:5]",
+                exportLocalsConvention: "dashes",
               },
             },
           },

@@ -22,7 +22,9 @@ module.exports = {
   // 插件 相当于引入额外的规则集，仅引入规则列表，需配置才生效
   plugins: ["@typescript-eslint", "prettier"],
   // 全局变量
-  globals: {},
+  globals: {
+    React: true,
+  },
   // 规则配置
   rules: {
     "react/react-in-jsx-scope": "off",

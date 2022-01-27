@@ -1,15 +1,15 @@
+import type { RouteObject } from "react-router-dom";
+import Index from "@/pages/index";
 import Todo from "@/pages/todo";
 import User from "@/pages/user";
 import BasicLayout from "@/layouts/BasicLayout";
-
-import type { RouteObject } from "react-router-dom";
 
 let routes: RouteObject[] = [
   {
     path: "/",
     element: <BasicLayout />,
     children: [
-      { index: true, element: <Todo /> },
+      { index: true, element: <Index /> },
       {
         path: "/todo",
         element: <Todo />,

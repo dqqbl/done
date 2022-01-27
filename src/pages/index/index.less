@@ -1,0 +1,39 @@
+@import url("~@/styles/mixin.less");
+.index-root {
+  .flex(@align-items: flex-start);
+  padding: @space-xl;
+  height: calc(100vh - 54px);
+  .app-list-wrap {
+    flex: 1;
+    display: grid;
+    row-gap: 40px;
+    column-gap: 20px;
+    grid-template-columns: repeat(auto-fill, 180px);
+    .app-item-wrap {
+      .flex(@justify-content: center);
+      .wh(180px, 120px);
+      background: #fff;
+      font-size: @font-size-3;
+      cursor: pointer;
+    }
+  }
+  .login-wrap {
+    .flex(@flex-direction: column, @justify-content: center);
+    margin-top: 10vh;
+    padding: 32px 0;
+    background: #fff;
+    :global {
+      form {
+        width: 64%;
+      }
+    }
+    .login-title {
+      color: @primary-color;
+      font-size: @font-size-1;
+    }
+    .login-btn {
+      width: 100%;
+      margin-top: @space-lg;
+    }
+  }
+}

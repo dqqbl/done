@@ -1,0 +1,19 @@
+@import url("~@/styles/mixin.less");
+
+.nav-wrap {
+  .flex();
+  color: @font-color-0;
+  background: @primary-color;
+  height: 54px;
+  padding: @space-md;
+  box-shadow: @primary-box-shadow;
+  > ul {
+    .flex();
+    a {
+      color: @font-color-0;
+    }
+  }
+  .index-icon {
+    cursor: pointer;
+  }
+}

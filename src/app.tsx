@@ -1,5 +1,4 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import { useRoutes } from "react-router-dom";
+import { HashRouter as Router, useRoutes } from "react-router-dom";
 import ReactDom from "react-dom";
 import routes from "./routes";
 import styles from "./app.less";
