@@ -28,5 +28,11 @@ module.exports = {
   // 规则配置
   rules: {
     "react/react-in-jsx-scope": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        printWidth: 120,
+      },
+    ],
   },
 };

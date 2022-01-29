@@ -1,10 +1,10 @@
 import { HashRouter as Router, useRoutes } from "react-router-dom";
 import ReactDom from "react-dom";
-import routes from "./routes";
+import getRoutes from "./routes";
 import styles from "./app.less";
 
 const AppContent = () => {
-  let element = useRoutes(routes);
+  let element = useRoutes(getRoutes(false));
   return <div className={styles.app}>{element}</div>;
 };
 

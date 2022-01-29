@@ -8,7 +8,8 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "request": ["src/utils/request.ts"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

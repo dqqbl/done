@@ -27,9 +27,9 @@ const prodConf = {
               postcssOptions: {
                 plugins: [
                   "postcss-preset-env",
-                  require("postcss-normalize")({
-                    forceImport: "sanitize.css",
-                  }),
+                  // require("postcss-normalize")({
+                  //   forceImport: "sanitize.css",
+                  // }),
                 ],
               },
             },

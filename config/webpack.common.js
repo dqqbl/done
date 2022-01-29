@@ -19,6 +19,7 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
       "@": path.resolve(__dirname, "../src"),
+      request: path.resolve(__dirname, "../src/utils/request.ts"),
     },
   },
   /** 配置如何处理项目中的不同类型的模块 */

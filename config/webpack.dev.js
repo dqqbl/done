@@ -34,10 +34,10 @@ const devConf = {
               postcssOptions: {
                 plugins: [
                   "postcss-preset-env",
-                  require("postcss-normalize")({
-                    // 定义在CSS文件开头插入的CSS库
-                    forceImport: "sanitize.css",
-                  }),
+                  // require("postcss-normalize")({
+                  //   // 定义在CSS文件开头插入的CSS库
+                  //   forceImport: "sanitize.css",
+                  // }),
                 ],
               },
             },
@@ -79,6 +79,15 @@ const devConf = {
       },
     ],
   },
+  // devServer: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "http://localhost:8000/",
+  //       pathRewrite: { "^/api": "" },
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // },
 };
 
 module.exports = merge(commonConf, devConf);
