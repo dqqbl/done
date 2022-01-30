@@ -1,8 +1,22 @@
+import { Button } from "antd";
+import { useUserInfo } from "@/hooks";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./index.less";
+import localStore from "@/utils/localStore";
+import { useDispatch } from "@/hooks/redux";
+import { setShowLogin } from "@/reducer/common";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { userInfo } = useUserInfo();
+  const { avatarUrl } = userInfo;
+
+  const handleLoginSide = () => {
+    dispatch(setShowLogin(true));
+  };
+
   return (
     <nav className={styles.navWrap}>
       <div onClick={() => navigate("/")} className={styles.indexIcon}>
@@ -13,7 +27,18 @@ const NavBar = () => {
           <Link to="/todo">todo</Link>
         </li> */}
         <li>
-          <Link to="/user">user</Link>
+          <Button size="small" onClick={() => localStore.clear()}>
+            清除缓存
+          </Button>
+        </li>
+        <li>
+          {avatarUrl ? (
+            <Link to="/user">
+              <div className={styles.avatar} dangerouslySetInnerHTML={{ __html: avatarUrl }}></div>
+            </Link>
+          ) : (
+            <span onClick={handleLoginSide}>login</span>
+          )}
         </li>
       </ul>
     </nav>

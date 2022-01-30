@@ -79,6 +79,7 @@ const devConf = {
       },
     ],
   },
+  devtool: "source-map",
   // devServer: {
   //   proxy: {
   //     "/api": {

@@ -1,5 +1,5 @@
-import { USER_TOKEN_INFO } from "@/constants";
 import axios from "axios";
+import { USER_TOKEN_INFO } from "@/constants";
 import { refreshToken as handleRefreshToken } from "@/api/auth";
 import localStore from "./localStore";
 
@@ -16,8 +16,8 @@ let requestList: Function[] = [];
 /** 请求拦截 */
 instance.interceptors.request.use((config) => {
   const { url = "" } = config;
-  if (noInterceptList.includes(url)) return config;
   const tokenObj = localStore.get(USER_TOKEN_INFO);
+  if (noInterceptList.includes(url) || !tokenObj) return config;
   const { accessToken, accessTokenExpiresIn, refreshTokenExpiresIn } = tokenObj;
   // access_token 剩余时间小于五分钟
   if (accessTokenExpiresIn - new Date().getTime() < 5 * 60 * 1000) {
@@ -58,7 +58,18 @@ instance.interceptors.request.use((config) => {
 });
 
 /** 响应拦截器 */
-instance.interceptors.response.use((res) => res.data);
+instance.interceptors.response.use(
+  (res) => {
+    return res.data;
+  },
+  (error) => {
+    console.log("interceptors:", error);
+    if (error.response.status === 401) {
+      localStore.remove(USER_TOKEN_INFO);
+      window.location.replace("/#/?reLogin=true");
+    }
+  }
+);
 
 export const get = instance.get;
 export const post = instance.post;
