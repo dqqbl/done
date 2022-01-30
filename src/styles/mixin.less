@@ -1,4 +1,4 @@
-// flex布局
+/** flex布局 */
 .flex(@align-items: center, @flex-direction: row, @justify-content: space-between) {
   display: flex;
   flex-direction: @flex-direction;
@@ -6,8 +6,29 @@
   justify-content: @justify-content;
 }
 
-// 宽高
+/** 宽高 */
 .wh(@width, @height) {
   width: @width;
   height: @height;
+}
+
+/** 滚动条样式 */
+// 该特性是非标准的
+.changeContainerScrollbar(@display: block, @scrollbarSize: 7px, @scrollbarThumbBg: #c1c1c1, @scrollbarThumbRadius: 20px, @scrollbarTrackPiece: transparent) {
+  // 滚动条整体样式，宽高分别对应横竖滚动条的尺寸
+  &::-webkit-scrollbar {
+    display: @display;
+    width: @scrollbarSize;
+    height: @scrollbarSize;
+  }
+  // 滚动条上的滑块
+  &::-webkit-scrollbar-thumb {
+    outline: none;
+    background: @scrollbarThumbBg;
+    border-radius: @scrollbarThumbRadius;
+  }
+  // 滚动条轨道样式
+  &::-webkit-scrollbar-track-piece {
+    background: @scrollbarTrackPiece;
+  }
 }

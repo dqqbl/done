@@ -18,7 +18,8 @@ module.exports = {
   "primary-box-shadow": "@box-shadow-0",
 
   // 间距
-  "space-xl": "32px",
+  "space-xxl": "32px",
+  "space-xl": "24px",
   "space-lg": "16px",
   "space-md": "8px",
   "space-sm": "4px",
@@ -34,8 +35,13 @@ module.exports = {
   // 字体大小
   // "font-size-0": "48px",
   "font-size-1": "32px",
-  "font-size-3": "22px",
-  "font-size-4": "16px",
+  "font-size-3": "20px",
+  "font-size-4": "18px",
+  "font-size-5": "16px",
 
-  "primary-font-size": "@font-size-4",
+  "primary-font-size": "@font-size-5",
+
+  // 页面变量
+  "navbar-height": "54px",
+  "content-height": "calc(100vh - @navbar-height)",
 };

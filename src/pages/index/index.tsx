@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "@/hooks/redux";
 import { setShowLogin } from "@/reducer/common";
 import { initialUser, updateUser } from "@/reducer/user";
+import { USER_TOKEN_INFO } from "@/constants";
 
 const Index = () => {
   const [form] = Form.useForm();
@@ -40,11 +41,16 @@ const Index = () => {
     }
   }, [navigate]);
 
+  const handleCardClick = (url: string) => {
+    if (localStore.get(USER_TOKEN_INFO)) return navigate(url);
+    dispatch(setShowLogin(true));
+  };
+
   return (
     <div className={styles.indexRoot}>
       <div className={styles.appListWrap}>
         {appList.map((i) => (
-          <BasicCard key={i.name} className={styles.appItemWrap} onClick={() => navigate(i.url)}>
+          <BasicCard key={i.name} className={styles.appItemWrap} onClick={() => handleCardClick(i.url)}>
             {i.name}
           </BasicCard>
         ))}

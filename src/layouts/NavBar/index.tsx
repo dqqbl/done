@@ -26,11 +26,11 @@ const NavBar = () => {
         {/* <li>
           <Link to="/todo">todo</Link>
         </li> */}
-        <li>
+        {/* <li>
           <Button size="small" onClick={() => localStore.clear()}>
             清除缓存
           </Button>
-        </li>
+        </li> */}
         <li>
           {avatarUrl ? (
             <Link to="/user">
