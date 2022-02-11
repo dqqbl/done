@@ -1,20 +1,21 @@
-import { DocumentInfo } from "@/types/todo";
+import { memo } from "react";
 import classNames from "classnames";
+import { DocumentInfo } from "@/types/todo";
 import styles from "./index.less";
 
 interface SideBarProps {
   data: DocumentInfo[];
-  curItem?: DocumentInfo;
+  curItemId?: string;
   handleSelect: (item: DocumentInfo) => void;
 }
 
 const SideBar = (props: SideBarProps) => {
-  const { data = [], curItem, handleSelect } = props;
+  const { data = [], curItemId, handleSelect } = props;
 
   const handleClick = (item: DocumentInfo) => {
-    if (item.id === curItem?.id) return
-    handleSelect(item)
-  }
+    if (item.id === curItemId) return;
+    handleSelect(item);
+  };
 
   return (
     <div className={styles.sideBarWrap}>
@@ -22,7 +23,11 @@ const SideBar = (props: SideBarProps) => {
       <div className={styles.sideBarContentWrap}>
         {/* <div className={styles.sideBarContent}> */}
         {data.map((i) => (
-          <li className={classNames(styles.directoryItem, {[styles.selected]: curItem?.id === i.id})} key={i.id} onClick={() => handleClick(i)}>
+          <li
+            className={classNames(styles.directoryItem, { [styles.selected]: curItemId === i.id })}
+            key={i.id}
+            onClick={() => handleClick(i)}
+          >
             {i.name}
           </li>
         ))}
@@ -34,4 +39,4 @@ const SideBar = (props: SideBarProps) => {
     </div>
   );
 };
-export default SideBar;
+export default memo(SideBar);

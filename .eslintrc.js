@@ -34,5 +34,6 @@ module.exports = {
         printWidth: 120,
       },
     ],
+    "no-unused-vars": ["error", { vars: "all", args: "none" }],
   },
 };

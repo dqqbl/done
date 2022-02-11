@@ -1,0 +1,22 @@
+@import url("~@/styles/mixin.less");
+
+.document-wrap {
+  width: 100%;
+  // background: peachpuff;
+  .title-bar {
+    .flex();
+    width: 100%;
+    padding: @space-md @space-lg @space-xxl;
+    height: 64px;
+    .title {
+      font-size: @font-size-3;
+      font-weight: 700;
+    }
+  }
+  .document-content-wrap {
+    height: calc(@content-height - 64px);
+    padding: 0 @space-md @space-md;
+    overflow-y: scroll;
+    .changeContainerScrollbar();
+  }
+}

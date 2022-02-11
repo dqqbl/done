@@ -1,0 +1,48 @@
+@import url("~@/styles/mixin.less");
+
+.item-card-wrap {
+  padding: 0 @space-md @space-xxl;
+  // &:hover {
+  //   background: fade(#d9d9d9, 20%);
+  // }
+  .item-title {
+    font-size: @font-size-3;
+    font-weight: 700;
+  }
+  .item-content-wrap {
+    // padding: 0 @space-lg;
+    // .flex();
+    display: flex;
+    flex-direction: column;
+    margin-top: @space-lg;
+    .item-content-title {
+      position: relative;
+      padding: 0 28px;
+      &:hover {
+        background: fade(#d9d9d9, 20%);
+      }
+      // margin: @space-lg 0;
+      &::before {
+        content: " ";
+        display: inline-block;
+        .wh(10px, 10px);
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 8px;
+        transform: translateY(-50%);
+        background-color: @primary-color;
+      }
+    }
+    // .is-item-expand {
+    //   padding-bottom: 0;
+    // }
+    .sub-item-wrap {
+      margin: @space-md 0 0;
+      padding: 0 42px;
+      &:hover {
+        background: fade(#d9d9d9, 20%);
+      }
+    }
+  }
+}
