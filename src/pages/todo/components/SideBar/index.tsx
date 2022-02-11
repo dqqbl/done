@@ -12,10 +12,12 @@ interface SideBarProps {
 const SideBar = (props: SideBarProps) => {
   const { data = [], curItemId, handleSelect } = props;
 
-  const handleClick = (item: DocumentInfo) => {
+  const handleItemClick = (item: DocumentInfo) => {
     if (item.id === curItemId) return;
     handleSelect(item);
   };
+
+  const handleAddClick = () => {};
 
   return (
     <div className={styles.sideBarWrap}>
@@ -26,14 +28,14 @@ const SideBar = (props: SideBarProps) => {
           <li
             className={classNames(styles.directoryItem, { [styles.selected]: curItemId === i.id })}
             key={i.id}
-            onClick={() => handleClick(i)}
+            onClick={() => handleItemClick(i)}
           >
             {i.name}
           </li>
         ))}
         {/* </div> */}
       </div>
-      <div className={styles.sideBarFooter}>
+      <div className={styles.sideBarFooter} onClick={handleAddClick}>
         <div className={styles.addDocIcon}>+</div>
       </div>
     </div>

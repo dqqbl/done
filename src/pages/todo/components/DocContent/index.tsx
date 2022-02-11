@@ -10,8 +10,6 @@ const DocContent = (props: DocContentProps) => {
   const { data } = props;
   const { id: docId, name: docName, lists: itemLists } = data || {};
 
-  console.log(itemLists);
-
   return (
     <div className={styles.documentWrap}>
       <div className={styles.titleBar}>

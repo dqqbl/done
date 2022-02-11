@@ -17,10 +17,14 @@ const Todo = () => {
     setSelectedItem(data);
   };
 
+  // const handleAddClick = () => {
+  //   const tempList = [{ name: "未命名", lists: [] }, ...todoList];
+  // };
+
   useEffect(() => {
     getDocuments()
       .then((res) => {
-        const { data } = res;
+        const { data = [] } = res;
         setTodoList(data);
         if (data?.[0]) handleSelect(data[0]);
       })

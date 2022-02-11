@@ -16,8 +16,6 @@ const ItemCard = (props: ItemCardProps) => {
     <div className={styles.itemCardWrap}>
       <div className={styles.itemTitle}>{title}</div>
       {items?.map(({ id: itemId, content: itemContent, subItems }) => {
-        console.log("???");
-        console.log(subItems);
         return (
           <div className={styles.itemContentWrap} key={itemId}>
             <div className={styles.itemContentTitle}>{itemContent}</div>
