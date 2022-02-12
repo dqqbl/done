@@ -1,5 +1,7 @@
 // import { useState } from "react";
 // import classNames from "classnames";
+import { memo } from "react";
+import { DInput } from "@/components";
 import { TodoItemInfo } from "@/types/todo";
 import styles from "./index.less";
 
@@ -14,7 +16,16 @@ const ItemCard = (props: ItemCardProps) => {
 
   return (
     <div className={styles.itemCardWrap}>
-      <div className={styles.itemTitle}>{title}</div>
+      <DInput
+        isDesc={true}
+        descClassName={styles.itemTitle}
+        defaultValue={title}
+        // isDesc={!(curItemId === i.id && isEditing)}
+        // ref={newDocRef}
+        // onBlur={handleBlur}
+        // onChange={handleChange}
+      />
+      {/* <div className={styles.itemTitle}>{title}</div> */}
       {items?.map(({ id: itemId, content: itemContent, subItems }) => {
         return (
           <div className={styles.itemContentWrap} key={itemId}>
@@ -33,4 +44,4 @@ const ItemCard = (props: ItemCardProps) => {
   );
 };
 
-export default ItemCard;
+export default memo(ItemCard);

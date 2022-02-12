@@ -1,5 +1,6 @@
+import { useEffect, memo, useState } from "react";
 import { message, Modal } from "antd";
-import { DocumentInfo } from "@/types/todo";
+import { DocumentInfo, TodoItem, TodoItemInfo } from "@/types/todo";
 import ItemCard from "../ItemCard";
 import styles from "./index.less";
 import { deleteDocument } from "@/api/todo";
@@ -11,7 +12,9 @@ interface DocContentProps {
 
 const DocContent = (props: DocContentProps) => {
   const { data, initDocList } = props;
-  const { id: docId, name: docName, lists: itemLists } = data || {};
+  const { id: docId, name: docName, lists: itemLists = [] } = data || {};
+
+  const [renderList, setRenderList] = useState<TodoItemInfo[]>();
 
   const handleDeleteDoc = () => {
     Modal.confirm({
@@ -30,18 +33,34 @@ const DocContent = (props: DocContentProps) => {
     });
   };
 
+  const emptyObj = {
+    id: "newObj",
+    title: new Date().toDateString(),
+    items: [],
+  };
+
+  useEffect(() => {
+    setRenderList(itemLists);
+  }, [itemLists]);
+
   return (
     <div className={styles.documentWrap}>
       <div className={styles.titleBar}>
         <div className={styles.titleLeftBar}></div>
         <div className={styles.title}>{docName}</div>
         <div className={styles.titleRightBar}>
-          <div>➕</div>
+          <div
+            onClick={() => {
+              setRenderList([emptyObj, ...itemLists]);
+            }}
+          >
+            ➕
+          </div>
           <div onClick={handleDeleteDoc}>删</div>
         </div>
       </div>
       <div className={styles.documentContentWrap}>
-        {itemLists?.map((i) => (
+        {renderList?.map((i) => (
           <ItemCard key={i.id} data={i} />
         ))}
       </div>
@@ -49,4 +68,4 @@ const DocContent = (props: DocContentProps) => {
   );
 };
 
-export default DocContent;
+export default memo(DocContent);
