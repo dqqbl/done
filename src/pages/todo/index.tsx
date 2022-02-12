@@ -11,17 +11,14 @@ const Todo = () => {
   const [curItemId, setCurItemId] = useState("");
   const [selectedItem, setSelectedItem] = useState<DocumentInfo>();
 
-  const handleSelect = async (item: DocumentInfo) => {
+  const handleSelect = async (item: DocumentInfo, empty = false) => {
     setCurItemId(item.id);
+    if (empty) return setSelectedItem(item);
     const { data } = await getDocumentDetails(item.id);
     setSelectedItem(data);
   };
 
-  // const handleAddClick = () => {
-  //   const tempList = [{ name: "未命名", lists: [] }, ...todoList];
-  // };
-
-  useEffect(() => {
+  const initDocList = () =>
     getDocuments()
       .then((res) => {
         const { data = [] } = res;
@@ -31,12 +28,15 @@ const Todo = () => {
       .catch(() => {
         message.error("获取todolist失败");
       });
+
+  useEffect(() => {
+    initDocList();
   }, []);
 
   return (
     <div className={styles.todoRoot}>
-      <SideBar data={todoList} handleSelect={handleSelect} curItemId={curItemId} />
-      <DocContent data={selectedItem}></DocContent>
+      <SideBar data={todoList} handleSelect={handleSelect} curItemId={curItemId} initDocList={initDocList} />
+      <DocContent data={selectedItem!} initDocList={initDocList}></DocContent>
     </div>
   );
 };

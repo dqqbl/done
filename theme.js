@@ -35,6 +35,7 @@ module.exports = {
   // 字体大小
   // "font-size-0": "48px",
   "font-size-1": "32px",
+  "font-size-2": "24px",
   "font-size-3": "20px",
   "font-size-4": "18px",
   "font-size-5": "16px",

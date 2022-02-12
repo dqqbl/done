@@ -60,10 +60,10 @@ const Index = () => {
           <h3 className={styles.loginTitle}>Welcome Done!</h3>
           <Form form={form} colon={false}>
             <Form.Item name={"acount"}>
-              <DInput placeholder="acount" />
+              <DInput placeholder="acount" radius={true} />
             </Form.Item>
             <Form.Item name={"password"}>
-              <DInput placeholder="password" />
+              <DInput placeholder="password" radius={true} />
             </Form.Item>
             <Button type="primary" size="large" shape="round" className={styles.loginBtn} onClick={handleLogin}>
               Login

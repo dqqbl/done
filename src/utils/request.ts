@@ -73,6 +73,8 @@ instance.interceptors.response.use(
 
 export const get = instance.get;
 export const post = instance.post;
+export const put = instance.put;
+export const del = instance.delete;
 
 export interface Response<T> {
   code: number;

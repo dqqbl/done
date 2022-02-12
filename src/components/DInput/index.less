@@ -1,16 +1,22 @@
 .d-input-wrap {
-  color: red;
   :global {
     input {
       border-top: none;
       border-left: none;
       border-right: none;
-      border-radius: 4px;
+      border-radius: 0;
       padding: @space-sm;
       border-bottom: 2px solid #d9d9d9;
       &:focus {
         box-shadow: 0px 4px rgb(102 103 171 / 20%);
       }
+    }
+  }
+}
+.radius {
+  :global {
+    input {
+      border-radius: 4px;
     }
   }
 }
