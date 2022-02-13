@@ -1,32 +1,37 @@
 // import { useState } from "react";
 // import classNames from "classnames";
-import { memo } from "react";
+import { forwardRef, memo } from "react";
 import { DInput } from "@/components";
-import { TodoItemInfo } from "@/types/todo";
+import { TodoListInfo } from "@/types/todo";
 import styles from "./index.less";
 
-interface ItemCardProps {
-  data: TodoItemInfo;
+interface ListCardProps {
+  data: TodoListInfo;
+  curSelId: string;
+  tabIndex: number;
+  isEditing: boolean;
+  onKeyDown: (e: React.KeyboardEvent) => void;
+  onBlur:() => void
 }
 
-const ItemCard = (props: ItemCardProps) => {
-  const { data } = props;
-  const { id: docId, title, items } = data;
+const ListCard = (props: ListCardProps, ref: any) => {
+  const { data, curSelId, tabIndex, isEditing, onKeyDown, onBlur } = props;
+  const { id: listId, title, items: itemContents } = data;
   // const [isExpand, setIsExpand] = useState(true);
 
   return (
-    <div className={styles.itemCardWrap}>
+    <div className={styles.itemCardWrap} tabIndex={tabIndex} onKeyDown={onKeyDown} >
       <DInput
-        isDesc={true}
+        isDesc={!isEditing}
         descClassName={styles.itemTitle}
         defaultValue={title}
-        // isDesc={!(curItemId === i.id && isEditing)}
-        // ref={newDocRef}
+        ref={ref}
+        onBlur={onBlur}
         // onBlur={handleBlur}
         // onChange={handleChange}
       />
       {/* <div className={styles.itemTitle}>{title}</div> */}
-      {items?.map(({ id: itemId, content: itemContent, subItems }) => {
+      {itemContents?.map(({ id: itemId, content: itemContent, subItems }) => {
         return (
           <div className={styles.itemContentWrap} key={itemId}>
             <div className={styles.itemContentTitle}>{itemContent}</div>
@@ -44,4 +49,4 @@ const ItemCard = (props: ItemCardProps) => {
   );
 };
 
-export default memo(ItemCard);
+export default memo(forwardRef(ListCard));

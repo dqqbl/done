@@ -2,16 +2,16 @@
 export interface DocumentInfo {
   id: string;
   name?: string;
-  lists?: TodoItemInfo[];
+  lists?: TodoListInfo[];
+}
+
+export interface TodoListInfo {
+  id: string;
+  title: string;
+  items: TodoItemInfo[];
 }
 
 export interface TodoItemInfo {
-  id: string;
-  title: string;
-  items: TodoItem[];
-}
-
-export interface TodoItem {
   id: string;
   content: string;
   subItems: SubItem[];

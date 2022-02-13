@@ -2,13 +2,16 @@
 
 .item-card-wrap {
   padding: 0 @space-md @space-xxl;
-  // &:hover {
-  //   background: fade(#d9d9d9, 20%);
-  // }
+  &:focus {
+    background: fade(#d9d9d9, 20%);
+  }
   .item-title {
     font-size: @font-size-3;
     font-weight: 700;
     padding: 0;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .item-content-wrap {
     // padding: 0 @space-lg;
