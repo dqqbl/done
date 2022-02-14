@@ -11,13 +11,21 @@ const Todo = () => {
   const [curItemId, setCurItemId] = useState("");
   const [selectedItem, setSelectedItem] = useState<DocumentInfo>();
 
-  const handleSelect = async (item: DocumentInfo, empty = false) => {
-    setCurItemId(item.id);
-    if (empty) return setSelectedItem(item);
-    const { data } = await getDocumentDetails(item.id);
+  /** 初始化单个文档详情数据 */
+  const initTodoList = async (id = curItemId) => {
+    const { data } = await getDocumentDetails(id);
     setSelectedItem(data);
   };
 
+  const handleSelect = async (item: DocumentInfo, empty = false) => {
+    setCurItemId(item.id);
+    if (empty) return setSelectedItem(item);
+    await initTodoList(item.id);
+    // const { data } = await getDocumentDetails(item.id);
+    // setSelectedItem(data);
+  };
+
+  /** 初始化sideBar数据 */
   const initDocList = () =>
     getDocuments()
       .then((res) => {
@@ -36,7 +44,7 @@ const Todo = () => {
   return (
     <div className={styles.todoRoot}>
       <SideBar data={todoList} handleSelect={handleSelect} curItemId={curItemId} initDocList={initDocList} />
-      <DocContent data={selectedItem!} initDocList={initDocList}></DocContent>
+      <DocContent initialTodoList={selectedItem!} initDocList={initDocList} initTodoList={initTodoList}></DocContent>
     </div>
   );
 };

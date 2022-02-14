@@ -24,3 +24,11 @@ export const getDocuments = (): Promise<Response<DocumentInfo[]>> => get(`/todo/
 
 /** 获取文档详情 */
 export const getDocumentDetails = (id: string): Promise<Response<DocumentInfo>> => get(`/todo/${id}`);
+
+interface CreateListParams {
+  id: string;
+  title: string;
+}
+
+/** 创建 文档 - list */
+export const createList = (params: CreateListParams) => post(`/todo/${params.id}/createList`, params);

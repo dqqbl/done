@@ -5,12 +5,31 @@
   &:focus {
     background: fade(#d9d9d9, 20%);
   }
-  .item-title {
-    font-size: @font-size-3;
-    font-weight: 700;
-    padding: 0;
-    &:hover {
-      cursor: pointer;
+  .title-wrap {
+    // .flex();
+    position: relative;
+    .item-title {
+      font-size: @font-size-3;
+      font-weight: 700;
+      padding: 0;
+      &:hover {
+        cursor: pointer;
+      }
+      /** test */
+      // &::after {
+      //   position: absolute;
+      //   right: 28px;
+      //   top: 0;
+      //   content: "+";
+      //   display: block;
+      //   .wh(2px);
+      // }
+    }
+    .add-btn {
+      position: absolute;
+      .wh(20px);
+      right: 0;
+      top: 0;
     }
   }
   .item-content-wrap {
