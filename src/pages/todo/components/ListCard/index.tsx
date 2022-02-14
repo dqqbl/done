@@ -3,8 +3,9 @@ import { message } from "antd";
 // import classNames from "classnames";
 import { DInput } from "@/components";
 import { TodoListInfo } from "@/types/todo";
-import styles from "./index.less";
 import { createList } from "@/api/todo";
+import { ENTER_KEY } from "@/constants";
+import styles from "./index.less";
 
 interface ListCardProps {
   docId: string;
@@ -12,13 +13,14 @@ interface ListCardProps {
   curListId: string;
   tabIndex: number;
   initDocList: () => void;
+  handleListClick: () => void
   // isEditing: boolean;
   // onKeyDown: (e: React.KeyboardEvent) => void;
   // onBlur: () => void;
 }
 
 const ListCard = (props: ListCardProps) => {
-  const { docId, initialData, curListId, tabIndex, initDocList } = props;
+  const { docId, initialData, curListId, tabIndex, initDocList, handleListClick } = props;
 
   const inputRef = useRef<any>(null);
 
@@ -28,12 +30,12 @@ const ListCard = (props: ListCardProps) => {
   const { id: listId, title, items: itemContents } = listData || {};
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // if (e.key === ENTER_KEY) {
-    //   if (isEditing) {
-    //     inputRef.current.blur();
-    //   }
-    //   setIsEditing(!isEditing);
-    // }
+    if (e.key === ENTER_KEY) {
+      if (isEditing) {
+        inputRef.current.blur();
+      }
+      setIsEditing(!isEditing);
+    }
   };
 
   const handleBlur = async () => {
@@ -79,7 +81,7 @@ const ListCard = (props: ListCardProps) => {
   // const [isExpand, setIsExpand] = useState(true);
 
   return (
-    <div className={styles.itemCardWrap} tabIndex={tabIndex} onKeyDown={handleKeyDown}>
+    <div className={styles.itemCardWrap} tabIndex={tabIndex} onKeyDown={handleKeyDown} onClick={handleListClick}>
       <div className={styles.titleWrap}>
         <DInput
           isDesc={!(curListId === listId && isEditing)}

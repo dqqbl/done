@@ -113,6 +113,7 @@ const DocContent = (props: DocContentProps) => {
             curListId={curListId}
             tabIndex={todoList?.length + index + 1}
             initDocList={initDocList}
+            handleListClick={() => setCurListId(i.id)}
             // onKeyDown={handleKeyDown}
             // isEditing={isEditing}
             // onBlur={handleBlur}
