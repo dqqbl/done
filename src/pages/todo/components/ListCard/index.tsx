@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef, memo, InputHTMLAttributes, ChangeEvent } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { message } from "antd";
-// import classNames from "classnames";
 import { DInput } from "@/components";
 import { TodoListInfo } from "@/types/todo";
-import { createList } from "@/api/todo";
+import { createList, deleteList } from "@/api/todo";
 import { ENTER_KEY } from "@/constants";
+import ItemCard from "../ItemCard";
 import styles from "./index.less";
 
 interface ListCardProps {
@@ -12,22 +12,22 @@ interface ListCardProps {
   initialData: TodoListInfo;
   curListId: string;
   tabIndex: number;
-  initDocList: () => void;
-  handleListClick: () => void
+  initTodoList: () => void;
+  handleListClick: () => void;
   // isEditing: boolean;
   // onKeyDown: (e: React.KeyboardEvent) => void;
   // onBlur: () => void;
 }
 
 const ListCard = (props: ListCardProps) => {
-  const { docId, initialData, curListId, tabIndex, initDocList, handleListClick } = props;
+  const { docId, initialData, curListId, tabIndex, initTodoList, handleListClick } = props;
 
   const inputRef = useRef<any>(null);
 
   const [listData, setListData] = useState(initialData);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { id: listId, title, items: itemContents } = listData || {};
+  const { id: listId, title, items: itemsList } = listData || {};
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === ENTER_KEY) {
@@ -44,7 +44,7 @@ const ListCard = (props: ListCardProps) => {
       if (curListId === "newList") {
         await createList({ id: docId, title: listData.title });
         message.success("条目创建成功");
-        await initDocList();
+        await initTodoList();
         // await initTodoList();
       } else {
         // const temp = [...renderList];
@@ -65,6 +65,11 @@ const ListCard = (props: ListCardProps) => {
     // const index = temp.findIndex((i) => i.id === curItemId);
     // temp[index].name = e.target.value;
     // setRenderList([...temp]);
+  };
+
+  const handleDeleteList = async () => {
+    await deleteList({ docId, listId: listData.id });
+    await initTodoList();
   };
 
   useEffect(() => {
@@ -92,12 +97,19 @@ const ListCard = (props: ListCardProps) => {
           // onBlur={handleBlur}
           onChange={handleChange}
         />
-        <div className={styles.addBtn} onClick={() => {}}>
-          +
+        <div className={styles.btnBar}>
+          <div className={styles.addItemBtn} onClick={() => {}}>
+            +
+          </div>
+          <div onClick={handleDeleteList}>删</div>
         </div>
       </div>
+      {itemsList?.map((i) => {
+        return <ItemCard key={i.id} initialData={i} />;
+      })}
+      {/* <ItemCard initialData={itemsList} /> */}
       {/* <div className={styles.itemTitle}>{title}</div> */}
-      {itemContents?.map(({ id: itemId, content: itemContent, subItems }) => {
+      {/* {itemContents?.map(({ id: itemId, content: itemContent, subItems }) => {
         return (
           <div className={styles.itemContentWrap} key={itemId}>
             <div className={styles.itemContentTitle}>{itemContent}</div>
@@ -110,7 +122,7 @@ const ListCard = (props: ListCardProps) => {
             })}
           </div>
         );
-      })}
+      })} */}
     </div>
   );
 };

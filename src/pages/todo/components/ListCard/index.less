@@ -25,46 +25,16 @@
       //   .wh(2px);
       // }
     }
-    .add-btn {
+    .btnBar {
       position: absolute;
-      .wh(20px);
       right: 0;
       top: 0;
-    }
-  }
-  .item-content-wrap {
-    // padding: 0 @space-lg;
-    // .flex();
-    display: flex;
-    flex-direction: column;
-    margin-top: @space-lg;
-    .item-content-title {
-      position: relative;
-      padding: 0 28px;
-      &:hover {
-        background: fade(#d9d9d9, 20%);
+      display: flex;
+      .add-item-btn {
+        .wh(20px);
       }
-      // margin: @space-lg 0;
-      &::before {
-        content: " ";
-        display: inline-block;
-        .wh(10px, 10px);
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        left: 8px;
-        transform: translateY(-50%);
-        background-color: @primary-color;
-      }
-    }
-    // .is-item-expand {
-    //   padding-bottom: 0;
-    // }
-    .sub-item-wrap {
-      margin: @space-md 0 0;
-      padding: 0 42px;
-      &:hover {
-        background: fade(#d9d9d9, 20%);
+      > div {
+        cursor: pointer;
       }
     }
   }

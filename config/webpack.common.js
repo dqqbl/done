@@ -39,10 +39,7 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: [
-          /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-          /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        ],
+        test: [/\.(png|jpe?g|gif|svg)(\?.*)?$/, /\.(woff2?|eot|ttf|otf)(\?.*)?$/],
         type: "asset",
         parser: {
           dataUrlCondition: {

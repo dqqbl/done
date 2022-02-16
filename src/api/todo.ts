@@ -30,5 +30,13 @@ interface CreateListParams {
   title: string;
 }
 
-/** 创建 文档 - list */
+interface DeleteListParams {
+  docId: string;
+  listId: string;
+}
+
+/** 创建 list */
 export const createList = (params: CreateListParams) => post(`/todo/${params.id}/createList`, params);
+
+/** 删除 list  */
+export const deleteList = (params: DeleteListParams) => del(`/todo/${params.docId}/${params.listId}`);
