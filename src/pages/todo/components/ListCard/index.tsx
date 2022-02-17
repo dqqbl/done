@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, memo } from "react";
 import { message } from "antd";
 import { DInput } from "@/components";
-import { TodoListInfo } from "@/types/todo";
-import { createList, deleteList } from "@/api/todo";
+import { TodoItemInfo, TodoListInfo } from "@/types/todo";
+import { createList, deleteList, getListDetails, updateList } from "@/api/todo";
 import { ENTER_KEY } from "@/constants";
 import ItemCard from "../ItemCard";
 import styles from "./index.less";
@@ -14,10 +14,13 @@ interface ListCardProps {
   tabIndex: number;
   initTodoList: () => void;
   handleListClick: () => void;
-  // isEditing: boolean;
-  // onKeyDown: (e: React.KeyboardEvent) => void;
-  // onBlur: () => void;
 }
+
+const emptyItem = {
+  id: "newItem",
+  content: "",
+  subItems: [],
+};
 
 const ListCard = (props: ListCardProps) => {
   const { docId, initialData, curListId, tabIndex, initTodoList, handleListClick } = props;
@@ -26,9 +29,12 @@ const ListCard = (props: ListCardProps) => {
 
   const [listData, setListData] = useState(initialData);
   const [isEditing, setIsEditing] = useState(false);
+  const [itemList, setItemList] = useState<TodoItemInfo[]>([]);
+  // const [curItemId, setCurItemId] = useState("");
 
-  const { id: listId, title, items: itemsList } = listData || {};
+  const { id: listId, title, items: initItemList } = listData || {};
 
+  /** handle List */
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === ENTER_KEY) {
       if (isEditing) {
@@ -42,17 +48,13 @@ const ListCard = (props: ListCardProps) => {
     try {
       setIsEditing(false);
       if (curListId === "newList") {
-        await createList({ id: docId, title: listData.title });
+        await createList({ docId, title: listData.title });
         message.success("条目创建成功");
         await initTodoList();
-        // await initTodoList();
       } else {
-        // const temp = [...renderList];
-        // const index = temp.findIndex((i) => i.id === curItemId);
-        // await updateDocument({ id: curItemId!, name: renderList[index].name });
+        await updateList({ listId: curListId, title: listData.title });
         message.success("条目修改成功");
       }
-      // await initDocList();
     } catch (error) {
       console.log(error);
       message.error("操作失败");
@@ -61,15 +63,25 @@ const ListCard = (props: ListCardProps) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListData({ ...listData, title: e.target.value });
-    // const temp = [...renderList!];
-    // const index = temp.findIndex((i) => i.id === curItemId);
-    // temp[index].name = e.target.value;
-    // setRenderList([...temp]);
   };
 
   const handleDeleteList = async () => {
-    await deleteList({ docId, listId: listData.id });
+    await deleteList(listData.id);
     await initTodoList();
+  };
+
+  /** handle item */
+  const handleAddItem = () => {
+    setItemList([emptyItem, ...itemList]);
+  };
+  const handleRefreshItemList = async () => {
+    const { data } = await getListDetails(listData.id);
+    setItemList(data.items);
+  };
+  const handleRemoveItem = (itemId: string) => {
+    const index = itemList.findIndex((i) => i.id === itemId);
+    itemList.splice(index, 1);
+    setItemList([...itemList]);
   };
 
   useEffect(() => {
@@ -82,8 +94,10 @@ const ListCard = (props: ListCardProps) => {
   useEffect(() => {
     isEditing && inputRef.current.focus();
   }, [isEditing]);
-  // const { id: listId, title, items: itemContents } = initialData;
-  // const [isExpand, setIsExpand] = useState(true);
+
+  useEffect(() => {
+    setItemList(initItemList);
+  }, [initItemList]);
 
   return (
     <div className={styles.itemCardWrap} tabIndex={tabIndex} onKeyDown={handleKeyDown} onClick={handleListClick}>
@@ -94,35 +108,26 @@ const ListCard = (props: ListCardProps) => {
           defaultValue={title}
           ref={inputRef}
           onBlur={handleBlur}
-          // onBlur={handleBlur}
           onChange={handleChange}
         />
         <div className={styles.btnBar}>
-          <div className={styles.addItemBtn} onClick={() => {}}>
+          <div className={styles.addItemBtn} onClick={handleAddItem}>
             +
           </div>
           <div onClick={handleDeleteList}>删</div>
         </div>
       </div>
-      {itemsList?.map((i) => {
-        return <ItemCard key={i.id} initialData={i} />;
-      })}
-      {/* <ItemCard initialData={itemsList} /> */}
-      {/* <div className={styles.itemTitle}>{title}</div> */}
-      {/* {itemContents?.map(({ id: itemId, content: itemContent, subItems }) => {
+      {itemList?.map((i) => {
         return (
-          <div className={styles.itemContentWrap} key={itemId}>
-            <div className={styles.itemContentTitle}>{itemContent}</div>
-            {subItems?.map(({ id: subItemId, content: subItemContent }) => {
-              return (
-                <div key={subItemId} className={styles.subItemWrap}>
-                  {subItemContent}
-                </div>
-              );
-            })}
-          </div>
+          <ItemCard
+            key={i.id}
+            initialData={i}
+            listId={listId}
+            handleRemoveItem={handleRemoveItem}
+            handleRefreshItemList={handleRefreshItemList}
+          />
         );
-      })} */}
+      })}
     </div>
   );
 };

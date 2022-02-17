@@ -26,12 +26,12 @@ const Todo = () => {
   };
 
   /** 初始化sideBar数据 */
-  const initDocList = () =>
+  const initDocList = (restSel = true) =>
     getDocuments()
       .then((res) => {
         const { data = [] } = res;
         setTodoList(data);
-        if (data?.[0]) handleSelect(data[0]);
+        if (restSel) handleSelect(data[0]);
       })
       .catch(() => {
         message.error("获取todolist失败");

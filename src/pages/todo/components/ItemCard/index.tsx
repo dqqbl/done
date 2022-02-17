@@ -1,81 +1,100 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { message } from "antd";
 import { TodoItemInfo } from "@/types/todo";
+import { DInput } from "@/components";
 import styles from "./index.less";
+import { createItem, deleteItem, updateItem } from "@/api/todo";
+import { ENTER_KEY } from "@/constants";
 
 interface ItemCardProps {
+  handleRemoveItem: (itemId: string) => void;
+  handleRefreshItemList: () => void;
   initialData: TodoItemInfo;
+  listId: string;
 }
 
 const ItemCard = (props: ItemCardProps) => {
-  const { initialData } = props;
-  // // const inputRef = useRef<any>(null);
+  const { initialData, listId, handleRemoveItem, handleRefreshItemList } = props;
 
   const [itemData, setItemData] = useState(initialData);
+  const [isEditing, setIsEditing] = useState(itemData.id === "newItem");
 
-  const { id: itemId, content, subItems } = itemData || {};
-  // // const [isEditing, setIsEditing] = useState(false);
+  const inputRef = useRef<any>(null);
 
-  // const { id: listId, title, items: itemContents } = listData || {};
+  const { id: itemId, subItems } = itemData || {};
 
-  // const handleKeyDown = (e: React.KeyboardEvent) => {
-  //   if (e.key === ENTER_KEY) {
-  //     if (isEditing) {
-  //       inputRef.current.blur();
-  //     }
-  //     setIsEditing(!isEditing);
-  //   }
-  // };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setItemData({ ...itemData, content: e.target.value });
+  };
 
-  // const handleBlur = async () => {
-  //   try {
-  //     setIsEditing(false);
-  //     if (curListId === "newList") {
-  //       await createList({ id: docId, title: listData.title });
-  //       message.success("条目创建成功");
-  //       await initTodoList();
-  //       // await initTodoList();
-  //     } else {
-  //       // const temp = [...renderList];
-  //       // const index = temp.findIndex((i) => i.id === curItemId);
-  //       // await updateDocument({ id: curItemId!, name: renderList[index].name });
-  //       message.success("条目修改成功");
-  //     }
-  //     // await initDocList();
-  //   } catch (error) {
-  //     console.log(error);
-  //     message.error("操作失败");
-  //   }
-  // };
+  const handleBlur = async () => {
+    try {
+      setIsEditing(false);
+      console.log(itemData);
+      if (!itemData.content) {
+        itemData.id === "newItem"
+          ? handleRemoveItem(itemData.id)
+          : setItemData({ ...itemData, content: initialData.content });
+        return;
+      }
+      if (itemData.id === "newItem") {
+        await createItem({ listId, content: itemData.content });
+        await handleRefreshItemList();
+      } else {
+        await updateItem({ itemId, content: itemData.content });
+      }
+    } catch (error) {
+      console.log(error);
+      message.error("操作失败");
+    }
+  };
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setListData({ ...listData, title: e.target.value });
-  //   // const temp = [...renderList!];
-  //   // const index = temp.findIndex((i) => i.id === curItemId);
-  //   // temp[index].name = e.target.value;
-  //   // setRenderList([...temp]);
-  // };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === ENTER_KEY) {
+      inputRef.current.blur();
+      setIsEditing(!isEditing);
+      e.stopPropagation();
+    }
+  };
 
-  // const handleDeleteList = async () => {
-  //   await deleteList({ docId, listId: listData.id });
-  //   await initTodoList();
-  // };
+  const handleDeleteItem = async () => {
+    try {
+      handleRemoveItem(itemData.id);
+      await deleteItem(itemData.id);
+    } catch (error) {
+      console.log(error);
+      message.error("删除失败");
+    }
+  };
 
   useEffect(() => {
     setItemData(initialData);
-    // if (initialData.id === "newList") {
-    //   setIsEditing(true);
-    // }
   }, [initialData]);
 
-  // useEffect(() => {
-  //   isEditing && inputRef.current.focus();
-  // }, [isEditing]);
-  // // const { id: listId, title, items: itemContents } = initialData;
-  // // const [isExpand, setIsExpand] = useState(true);
+  useEffect(() => {
+    if (inputRef.current) {
+      isEditing && inputRef.current.focus();
+    }
+  }, [isEditing]);
 
   return (
-    <div className={styles.itemContentWrap}>
-      <div className={styles.itemContentTitle}>{content}</div>
+    <div className={styles.itemCardWrap}>
+      <div className={styles.itemContentWrap}>
+        <DInput
+          className={styles.itemContentTitle}
+          defaultValue={itemData.content}
+          isDesc={!isEditing}
+          ref={inputRef}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onDescClick={() => setIsEditing(true)}
+          onKeyDown={handleKeyDown}
+        />
+        <div className={styles.btnBar}>
+          <div onClick={handleDeleteItem}>删</div>
+        </div>
+      </div>
+
       {subItems?.map(({ id: subItemId, content: subItemContent }) => {
         return (
           <div key={subItemId} className={styles.subItemWrap}>
@@ -84,41 +103,6 @@ const ItemCard = (props: ItemCardProps) => {
         );
       })}
     </div>
-    // <div className={styles.itemCardWrap} tabIndex={tabIndex} onKeyDown={handleKeyDown} onClick={handleListClick}>
-    //   <div className={styles.titleWrap}>
-    //     <DInput
-    //       isDesc={!(curListId === listId && isEditing)}
-    //       descClassName={styles.itemTitle}
-    //       defaultValue={title}
-    //       ref={inputRef}
-    //       onBlur={handleBlur}
-    //       // onBlur={handleBlur}
-    //       onChange={handleChange}
-    //     />
-    //     <div className={styles.btnBar}>
-    //       <div className={styles.addItemBtn} onClick={() => {}}>
-    //         +
-    //       </div>
-    //       <div onClick={handleDeleteList}>删</div>
-    //     </div>
-    //   </div>
-    //   {/* <ItemCard initialData={itemContents} /> */}
-    //   {/* <div className={styles.itemTitle}>{title}</div> */}
-    //   {/* {itemContents?.map(({ id: itemId, content: itemContent, subItems }) => {
-    //     return (
-    //       <div className={styles.itemContentWrap} key={itemId}>
-    //         <div className={styles.itemContentTitle}>{itemContent}</div>
-    //         {subItems?.map(({ id: subItemId, content: subItemContent }) => {
-    //           return (
-    //             <div key={subItemId} className={styles.subItemWrap}>
-    //               {subItemContent}
-    //             </div>
-    //           );
-    //         })}
-    //       </div>
-    //     );
-    //   })} */}
-    // </div>
   );
 };
 

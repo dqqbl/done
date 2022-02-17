@@ -1,11 +1,25 @@
 @import url("~@/styles/mixin.less");
 
-.item-content-wrap {
+.item-card-wrap {
   // padding: 0 @space-lg;
   // .flex();
   display: flex;
   flex-direction: column;
   margin-top: @space-lg;
+
+  .item-content-wrap {
+    position: relative;
+    .btn-bar {
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: flex;
+      > div {
+        cursor: pointer;
+      }
+    }
+  }
+
   .item-content-title {
     position: relative;
     padding: 0 28px;

@@ -11,16 +11,19 @@ interface DInputProps extends InputProps {
   isDesc?: boolean;
   /** 展示类名 */
   descClassName?: string;
+  onDescClick?: () => void;
 }
 
 const DInput = (props: DInputProps, ref: any) => {
-  const { className, radius = false, readOnly = false, isDesc = false, descClassName, ...rest } = props;
+  const { className, radius = false, readOnly = false, isDesc = false, descClassName, onDescClick, ...rest } = props;
 
   return (
     <div className={classnames(styles.dInputWrap, { [styles.radius]: radius }, className)}>
       {/* <Input disabled={disabled || readOnly} {...rest}></Input> */}
       {isDesc ? (
-        <div className={classnames(styles.descWrap, descClassName)}>{rest.defaultValue}</div>
+        <div className={classnames(styles.descWrap, descClassName)} onClick={onDescClick}>
+          {rest.defaultValue}
+        </div>
       ) : (
         <Input ref={ref} {...rest}></Input>
       )}

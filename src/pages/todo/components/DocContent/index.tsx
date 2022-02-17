@@ -1,15 +1,14 @@
-import { useEffect, memo, useState, useRef } from "react";
-import { message, Modal, Input } from "antd";
+import { useEffect, memo, useState } from "react";
+import { message, Modal } from "antd";
 import { DocumentInfo, TodoListInfo } from "@/types/todo";
 import ListCard from "../ListCard";
 import styles from "./index.less";
-import { createList, deleteDocument } from "@/api/todo";
-import { ENTER_KEY } from "@/constants";
+import { deleteDocument } from "@/api/todo";
 
 interface DocContentProps {
   initialTodoList: DocumentInfo;
   /** 初始化sideBar数据 */
-  initDocList: () => void;
+  initDocList: (restSel?: boolean) => void;
   /** 初始化文档内容 */
   initTodoList: () => void;
 }
@@ -21,7 +20,6 @@ const DocContent = (props: DocContentProps) => {
   const [todoList, setTodoList] = useState<TodoListInfo[]>();
 
   const [curListId, setCurListId] = useState("");
-  // const [isEditing, setIsEditing] = useState(false);
 
   const handleDeleteDoc = () => {
     Modal.confirm({
@@ -46,41 +44,10 @@ const DocContent = (props: DocContentProps) => {
     items: [],
   };
 
-  // const handleKeyDown = (e: React.KeyboardEvent) => {
-  //   if (e.key === ENTER_KEY) {
-  //     if (isEditing) {
-  //       inputRef.current.blur();
-  //     }
-  //     setIsEditing(!isEditing);
-  //   }
-  // };
-
-  // const handleBlur = async () => {
-  //   try {
-  //     setIsEditing(false);
-  //     if (curListId === "newList") {
-  //       await createList({ id: docId, title: renderList?.[0].title || "" });
-  //       message.success("文档创建成功");
-  //       await initTodoList();
-  //     } else {
-  //       // const temp = [...renderList];
-  //       // const index = temp.findIndex((i) => i.id === curItemId);
-  //       // await updateDocument({ id: curItemId!, name: renderList[index].name });
-  //       message.success("文档修改成功");
-  //     }
-  //     // await initDocList();
-  //   } catch (error) {
-  //     console.log(error);
-  //     message.error("操作失败");
-  //   }
-  // };
-
-  // const handleChange = () => {
-  //   const temp = [...renderList!];
-  //   const index = temp.findIndex((i) => i.id === curItemId);
-  //   temp[index].name = e.target.value;
-  //   setRenderList([...temp]);
-  // }
+  const handleAddList = () => {
+    setTodoList([emptyList, ...lists]);
+    setCurListId(emptyList.id);
+  };
 
   useEffect(() => {
     setTodoList(initialTodoList?.lists || []);
@@ -92,15 +59,7 @@ const DocContent = (props: DocContentProps) => {
         <div className={styles.titleLeftBar}></div>
         <div className={styles.title}>{docName}</div>
         <div className={styles.titleRightBar}>
-          <div
-            onClick={() => {
-              setTodoList([emptyList, ...lists]);
-              setCurListId(emptyList.id);
-              // setIsEditing(true);
-            }}
-          >
-            ➕
-          </div>
+          <div onClick={handleAddList}>➕</div>
           <div onClick={handleDeleteDoc}>删</div>
         </div>
       </div>
@@ -114,9 +73,6 @@ const DocContent = (props: DocContentProps) => {
             tabIndex={todoList?.length + index + 1}
             initTodoList={initTodoList}
             handleListClick={() => setCurListId(i.id)}
-            // onKeyDown={handleKeyDown}
-            // isEditing={isEditing}
-            // onBlur={handleBlur}
           />
         ))}
       </div>

@@ -13,7 +13,7 @@ interface SideBarProps {
   data: DocumentInfo[];
   curItemId?: string;
   handleSelect: (item: DocumentInfo, empty?: boolean) => void;
-  initDocList: () => void;
+  initDocList: (restSel?: boolean) => void;
 }
 
 const SideBar = (props: SideBarProps) => {
@@ -73,7 +73,7 @@ const SideBar = (props: SideBarProps) => {
         await updateDocument({ id: curItemId!, name: renderList[index].name });
         message.success("文档修改成功");
       }
-      await initDocList();
+      await initDocList(curItemId === "newDoc");
     } catch (error) {
       console.log(error);
       message.error("操作失败");
