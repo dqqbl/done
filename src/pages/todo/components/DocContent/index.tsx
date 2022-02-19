@@ -58,10 +58,12 @@ const DocContent = (props: DocContentProps) => {
       <div className={styles.titleBar}>
         <div className={styles.titleLeftBar}></div>
         <div className={styles.title}>{docName}</div>
-        <div className={styles.titleRightBar}>
-          <div onClick={handleAddList}>➕</div>
-          <div onClick={handleDeleteDoc}>删</div>
-        </div>
+        {docId && (
+          <div className={styles.titleRightBar}>
+            <div onClick={handleAddList}>➕</div>
+            <div onClick={handleDeleteDoc}>删</div>
+          </div>
+        )}
       </div>
       <div className={styles.documentContentWrap}>
         {todoList?.map((i, index) => (

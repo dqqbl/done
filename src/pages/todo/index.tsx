@@ -31,7 +31,7 @@ const Todo = () => {
       .then((res) => {
         const { data = [] } = res;
         setTodoList(data);
-        if (restSel) handleSelect(data[0]);
+        if (restSel && data?.length) handleSelect(data[0]);
       })
       .catch(() => {
         message.error("获取todolist失败");
