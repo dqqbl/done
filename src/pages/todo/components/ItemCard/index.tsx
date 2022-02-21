@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { message } from "antd";
+import classnames from "classnames";
 import { TodoItemInfo } from "@/types/todo";
 import { DInput } from "@/components";
 import styles from "./index.less";
@@ -18,7 +19,7 @@ const ItemCard = (props: ItemCardProps) => {
 
   const [itemData, setItemData] = useState(initialData);
   const [isEditing, setIsEditing] = useState(itemData.id === "newItem");
-
+  const [isHover, setIsHover] = useState(false);
   const inputRef = useRef<any>(null);
 
   const { id: itemId, subItems } = itemData || {};
@@ -79,9 +80,13 @@ const ItemCard = (props: ItemCardProps) => {
 
   return (
     <div className={styles.itemCardWrap}>
-      <div className={styles.itemContentWrap}>
+      <div
+        className={styles.itemContentWrap}
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+      >
         <DInput
-          className={styles.itemContentTitle}
+          className={classnames(styles.itemContentTitle, { [styles.noHoverStyle]: isEditing })}
           defaultValue={itemData.content}
           isDesc={!isEditing}
           ref={inputRef}
@@ -90,7 +95,7 @@ const ItemCard = (props: ItemCardProps) => {
           onDescClick={() => setIsEditing(true)}
           onKeyDown={handleKeyDown}
         />
-        <div className={styles.btnBar}>
+        <div className={styles.btnBar} style={{ visibility: isHover ? "visible" : "hidden" }}>
           <div onClick={handleDeleteItem}>删</div>
         </div>
       </div>

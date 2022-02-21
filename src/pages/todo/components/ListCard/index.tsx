@@ -30,7 +30,7 @@ const ListCard = (props: ListCardProps) => {
   const [listData, setListData] = useState(initialData);
   const [isEditing, setIsEditing] = useState(false);
   const [itemList, setItemList] = useState<TodoItemInfo[]>([]);
-  // const [curItemId, setCurItemId] = useState("");
+  const [isHover, setIsHover] = useState(false);
 
   const { id: listId, title, items: initItemList } = listData || {};
 
@@ -101,7 +101,7 @@ const ListCard = (props: ListCardProps) => {
 
   return (
     <div className={styles.itemCardWrap} tabIndex={tabIndex} onKeyDown={handleKeyDown} onClick={handleListClick}>
-      <div className={styles.titleWrap}>
+      <div className={styles.titleWrap} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         <DInput
           isDesc={!(curListId === listId && isEditing)}
           descClassName={styles.itemTitle}
@@ -110,7 +110,7 @@ const ListCard = (props: ListCardProps) => {
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        <div className={styles.btnBar}>
+        <div className={styles.btnBar} style={{ visibility: isHover ? "visible" : "hidden" }}>
           <div className={styles.addItemBtn} onClick={handleAddItem}>
             +
           </div>

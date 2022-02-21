@@ -7,8 +7,6 @@ import { ENTER_KEY } from "@/constants";
 import styles from "./index.less";
 import { message } from "antd";
 
-// type DocumentInfo = DocumentInfo;
-
 interface SideBarProps {
   data: DocumentInfo[];
   curItemId?: string;

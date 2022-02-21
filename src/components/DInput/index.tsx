@@ -11,7 +11,7 @@ interface DInputProps extends InputProps {
   isDesc?: boolean;
   /** 展示类名 */
   descClassName?: string;
-  onDescClick?: () => void;
+  onDescClick?: ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined
 }
 
 const DInput = (props: DInputProps, ref: any) => {
