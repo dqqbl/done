@@ -9,12 +9,14 @@ export interface TodoListInfo {
   id: string;
   title: string;
   items: TodoItemInfo[];
+  isDone: boolean
 }
 
 export interface TodoItemInfo {
   id: string;
   content: string;
   subItems: SubItem[];
+  isDone: boolean
 }
 
 export interface SubItem {

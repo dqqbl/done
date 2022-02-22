@@ -54,7 +54,8 @@ interface CreateItemParams {
 
 interface UpdateItemParams {
   itemId: string;
-  content: string;
+  content?: string;
+  isDone?: boolean
 }
 
 /** 创建 doc - list - item */

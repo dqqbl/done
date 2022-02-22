@@ -22,7 +22,7 @@ const ItemCard = (props: ItemCardProps) => {
   const [isHover, setIsHover] = useState(false);
   const inputRef = useRef<any>(null);
 
-  const { id: itemId, subItems } = itemData || {};
+  const { id: itemId, subItems, content, isDone } = itemData || {};
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItemData({ ...itemData, content: e.target.value });
@@ -68,6 +68,11 @@ const ItemCard = (props: ItemCardProps) => {
     }
   };
 
+  const handleItemIsDone = async () => {
+    await updateItem({ itemId, isDone: !isDone });
+    await handleRefreshItemList();
+  }
+
   useEffect(() => {
     setItemData(initialData);
   }, [initialData]);
@@ -87,15 +92,17 @@ const ItemCard = (props: ItemCardProps) => {
       >
         <DInput
           className={classnames(styles.itemContentTitle, { [styles.noHoverStyle]: isEditing })}
-          defaultValue={itemData.content}
-          isDesc={!isEditing}
+          defaultValue={content}
+          isDesc={!isEditing || isDone}
           ref={inputRef}
           onBlur={handleBlur}
           onChange={handleChange}
           onDescClick={() => setIsEditing(true)}
           onKeyDown={handleKeyDown}
+          descClassName={classnames({[styles.isDone]: isDone})}
         />
         <div className={styles.btnBar} style={{ visibility: isHover ? "visible" : "hidden" }}>
+          <div onClick={handleItemIsDone}>{isDone ? '返' : 'D'}</div>
           <div onClick={handleDeleteItem}>删</div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, memo } from "react";
 import { message } from "antd";
+import classnames from 'classnames'
 import { DInput } from "@/components";
 import { TodoItemInfo, TodoListInfo } from "@/types/todo";
 import { createList, deleteList, getListDetails, updateList } from "@/api/todo";
@@ -20,6 +21,7 @@ const emptyItem = {
   id: "newItem",
   content: "",
   subItems: [],
+  isDone: false
 };
 
 const ListCard = (props: ListCardProps) => {
@@ -32,7 +34,7 @@ const ListCard = (props: ListCardProps) => {
   const [itemList, setItemList] = useState<TodoItemInfo[]>([]);
   const [isHover, setIsHover] = useState(false);
 
-  const { id: listId, title, items: initItemList } = listData || {};
+  const { id: listId, title, items: initItemList, isDone } = listData || {};
 
   /** handle List */
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -76,6 +78,7 @@ const ListCard = (props: ListCardProps) => {
   };
   const handleRefreshItemList = async () => {
     const { data } = await getListDetails(listData.id);
+    setListData(data)
     setItemList(data.items);
   };
   const handleRemoveItem = (itemId: string) => {
@@ -103,12 +106,12 @@ const ListCard = (props: ListCardProps) => {
     <div className={styles.itemCardWrap} tabIndex={tabIndex} onKeyDown={handleKeyDown} onClick={handleListClick}>
       <div className={styles.titleWrap} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         <DInput
-          isDesc={!(curListId === listId && isEditing)}
-          descClassName={styles.itemTitle}
+          isDesc={!(curListId === listId && isEditing) || isDone}
           defaultValue={title}
           ref={inputRef}
           onBlur={handleBlur}
           onChange={handleChange}
+          descClassName={classnames(styles.itemTitle, {[styles.isDone]: isDone})}
         />
         <div className={styles.btnBar} style={{ visibility: isHover ? "visible" : "hidden" }}>
           <div className={styles.addItemBtn} onClick={handleAddItem}>
