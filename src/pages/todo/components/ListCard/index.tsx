@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, memo } from "react";
-import { message } from "antd";
-import classnames from 'classnames'
-import { DInput } from "@/components";
+import { message, Modal } from "antd";
+import classnames from "classnames";
+import { DInput, Icon } from "@/components";
 import { TodoItemInfo, TodoListInfo } from "@/types/todo";
 import { createList, deleteList, getListDetails, updateList } from "@/api/todo";
 import { ENTER_KEY } from "@/constants";
@@ -21,7 +21,7 @@ const emptyItem = {
   id: "newItem",
   content: "",
   subItems: [],
-  isDone: false
+  isDone: false,
 };
 
 const ListCard = (props: ListCardProps) => {
@@ -68,8 +68,13 @@ const ListCard = (props: ListCardProps) => {
   };
 
   const handleDeleteList = async () => {
-    await deleteList(listData.id);
-    await initTodoList();
+    Modal.confirm({
+      content: "确认删除该条目?",
+      onOk: async () => {
+        await deleteList(listData.id);
+        await initTodoList();
+      },
+    });
   };
 
   /** handle item */
@@ -78,7 +83,7 @@ const ListCard = (props: ListCardProps) => {
   };
   const handleRefreshItemList = async () => {
     const { data } = await getListDetails(listData.id);
-    setListData(data)
+    setListData(data);
     setItemList(data.items);
   };
   const handleRemoveItem = (itemId: string) => {
@@ -111,13 +116,11 @@ const ListCard = (props: ListCardProps) => {
           ref={inputRef}
           onBlur={handleBlur}
           onChange={handleChange}
-          descClassName={classnames(styles.itemTitle, {[styles.isDone]: isDone})}
+          descClassName={classnames(styles.itemTitle, { [styles.isDone]: isDone })}
         />
         <div className={styles.btnBar} style={{ visibility: isHover ? "visible" : "hidden" }}>
-          <div className={styles.addItemBtn} onClick={handleAddItem}>
-            +
-          </div>
-          <div onClick={handleDeleteList}>删</div>
+          <Icon type="icon-add" onClick={handleAddItem} />
+          <Icon type="icon-delete" onClick={handleDeleteList} />
         </div>
       </div>
       {itemList?.map((i) => {

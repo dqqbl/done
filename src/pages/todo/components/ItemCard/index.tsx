@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { message } from "antd";
 import classnames from "classnames";
 import { TodoItemInfo } from "@/types/todo";
-import { DInput } from "@/components";
+import { DInput, Icon } from "@/components";
 import styles from "./index.less";
 import { createItem, deleteItem, updateItem } from "@/api/todo";
 import { ENTER_KEY } from "@/constants";
@@ -31,7 +31,6 @@ const ItemCard = (props: ItemCardProps) => {
   const handleBlur = async () => {
     try {
       setIsEditing(false);
-      console.log(itemData);
       if (!itemData.content) {
         itemData.id === "newItem"
           ? handleRemoveItem(itemData.id)
@@ -71,7 +70,8 @@ const ItemCard = (props: ItemCardProps) => {
   const handleItemIsDone = async () => {
     await updateItem({ itemId, isDone: !isDone });
     await handleRefreshItemList();
-  }
+    setIsEditing(false)
+  };
 
   useEffect(() => {
     setItemData(initialData);
@@ -91,7 +91,7 @@ const ItemCard = (props: ItemCardProps) => {
         onMouseLeave={() => setIsHover(false)}
       >
         <DInput
-          className={classnames(styles.itemContentTitle, { [styles.noHoverStyle]: isEditing })}
+          className={classnames(styles.itemContentTitle, { [styles.noHoverStyle]: isEditing, [styles.itemTitleHover]: isHover })}
           defaultValue={content}
           isDesc={!isEditing || isDone}
           ref={inputRef}
@@ -99,11 +99,13 @@ const ItemCard = (props: ItemCardProps) => {
           onChange={handleChange}
           onDescClick={() => setIsEditing(true)}
           onKeyDown={handleKeyDown}
-          descClassName={classnames({[styles.isDone]: isDone})}
+          descClassName={classnames({ [styles.isDone]: isDone })}
         />
-        <div className={styles.btnBar} style={{ visibility: isHover ? "visible" : "hidden" }}>
-          <div onClick={handleItemIsDone}>{isDone ? '返' : 'D'}</div>
-          <div onClick={handleDeleteItem}>删</div>
+        <div className={styles.btnBar} style={{ visibility: isHover && !isEditing ? "visible" : "hidden" }}>
+          <Icon type={isDone ? 'icon-rest' : 'icon-done'} onClick={handleItemIsDone} />
+          <Icon type="icon-delete" onClick={handleDeleteItem} />
+          {/* <div onClick={handleItemIsDone}>{isDone ? "返" : "D"}</div>
+          <div onClick={handleDeleteItem}>删</div> */}
         </div>
       </div>
 

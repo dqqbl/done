@@ -1,5 +1,6 @@
 import { useEffect, memo, useState } from "react";
 import { message, Modal } from "antd";
+import { Icon } from "@/components";
 import { DocumentInfo, TodoListInfo } from "@/types/todo";
 import ListCard from "../ListCard";
 import styles from "./index.less";
@@ -42,6 +43,7 @@ const DocContent = (props: DocContentProps) => {
     id: "newList",
     title: new Date().toDateString(),
     items: [],
+    isDone: false,
   };
 
   const handleAddList = () => {
@@ -60,8 +62,8 @@ const DocContent = (props: DocContentProps) => {
         <div className={styles.title}>{docName}</div>
         {docId && (
           <div className={styles.titleRightBar}>
-            <div onClick={handleAddList}>➕</div>
-            <div onClick={handleDeleteDoc}>删</div>
+            <Icon type="icon-add" onClick={handleAddList} />
+            <Icon type="icon-delete" onClick={handleDeleteDoc} />
           </div>
         )}
       </div>

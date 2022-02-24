@@ -14,13 +14,14 @@
     .title-right-bar {
       display: flex;
       flex-direction: row;
-      & > div {
-        margin-left: 12px;
-        font-size: 16px;
-        opacity: 0.7;
+      svg {
+        margin-left: 16px;
+        font-size: 20px;
+        opacity: .7;
+        cursor: pointer;
         &:hover {
           opacity: 1;
-          cursor: pointer;
+          color: @primary-color;
         }
       }
     }

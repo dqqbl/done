@@ -1,6 +1,6 @@
 import React, { memo, useState, useRef, useEffect } from "react";
 import classNames from "classnames";
-import { DInput } from "@/components";
+import { DInput, Icon } from "@/components";
 import { createDocument, updateDocument } from "@/api/todo";
 import { DocumentInfo } from "@/types/todo";
 import { ENTER_KEY } from "@/constants";
@@ -113,7 +113,8 @@ const SideBar = (props: SideBarProps) => {
         {/* </div> */}
       </div>
       <div className={styles.sideBarFooter} onClick={handleAddClick}>
-        <div className={styles.addDocIcon}>+</div>
+        <Icon className={styles.addDocIcon} type="icon-add-doc"></Icon>
+        {/* <div className={styles.addDocIcon}><i className={"iconfont icon-add-doc"} /></div> */}
       </div>
     </div>
   );

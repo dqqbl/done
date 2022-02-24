@@ -23,11 +23,17 @@
       right: 0;
       top: 0;
       display: flex;
-      .add-item-btn {
-        .wh(20px);
-      }
-      > div {
+      height: 100%;
+      align-items: center;
+      svg {
+        margin: 8px;
         cursor: pointer;
+        font-size: 18px;
+        opacity: .7;
+        &:hover {
+          opacity: 1;
+          color: @primary-color;
+        }
       }
     }
   }

@@ -15,12 +15,25 @@
       right: 0;
       top: 0;
       display: flex;
-      > div {
+      height: 100%;
+      align-items: center;
+      svg {
+        margin: 8px;
         cursor: pointer;
+        // font-size: 18px;
+        opacity: .7;
+        &:hover {
+          opacity: 1;
+          color: @primary-color;
+        }
       }
     }
   }
 
+  .item-title-hover {
+    cursor: pointer;
+    background: fade(#d9d9d9, 20%);
+  }
   .item-content-title {
     &.no-hover-style {
       cursor: alias;
@@ -30,10 +43,6 @@
     }
     position: relative;
     padding-left: 28px;
-    &:hover {
-      cursor: pointer;
-      background: fade(#d9d9d9, 20%);
-    }
     &::before {
       content: " ";
       display: inline-block;
