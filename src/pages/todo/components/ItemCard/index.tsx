@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { message } from "antd";
 import classnames from "classnames";
-import { TodoItemInfo } from "@/types/todo";
+import { TodoItemInfo, SubItemInfo } from "@/types/todo";
 import { DInput, Icon } from "@/components";
 import styles from "./index.less";
-import { createItem, deleteItem, updateItem } from "@/api/todo";
+import { createItem, deleteItem, updateItem, getItemDetails } from "@/api/todo";
 import { ENTER_KEY } from "@/constants";
+import SubItemCard from "../SubItemCard";
 
 interface ItemCardProps {
   handleRemoveItem: (itemId: string) => void;
@@ -22,7 +23,10 @@ const ItemCard = (props: ItemCardProps) => {
   const [isHover, setIsHover] = useState(false);
   const inputRef = useRef<any>(null);
 
-  const { id: itemId, subItems, content, isDone } = itemData || {};
+  // subItem
+  const [subItemList, setSubItemList] = useState<SubItemInfo[]>([]);
+
+  const { id: itemId, subItems: initSubItemList, content, isDone } = itemData || {};
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItemData({ ...itemData, content: e.target.value });
@@ -73,9 +77,34 @@ const ItemCard = (props: ItemCardProps) => {
     setIsEditing(false)
   };
 
+  
+  /** handle subItem */
+  const emptySubItem = {
+    id: "newSubItem",
+    content: "",
+    isDone: false,
+  };
+  const handleAddSubItem = () => {
+    setSubItemList([emptySubItem, ...subItemList]);
+  };
+  const handleRefreshSubItemList = async () => {
+    const { data } = await getItemDetails(itemData.id);
+    setItemData(data);
+    setSubItemList(data.subItems);
+  };
+  const handleRemoveSubItem = (subItemId: string) => {
+    const index = subItemList.findIndex((i) => i.id === subItemId);
+    subItemList.splice(index, 1);
+    setSubItemList([...subItemList]);
+  };
+
   useEffect(() => {
     setItemData(initialData);
   }, [initialData]);
+
+  useEffect(() => {
+    setSubItemList(initSubItemList);
+  }, [initSubItemList]);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -97,23 +126,26 @@ const ItemCard = (props: ItemCardProps) => {
           ref={inputRef}
           onBlur={handleBlur}
           onChange={handleChange}
-          onDescClick={() => setIsEditing(true)}
+          onDescClick={() => !isDone && setIsEditing(true)}
           onKeyDown={handleKeyDown}
           descClassName={classnames({ [styles.isDone]: isDone })}
         />
         <div className={styles.btnBar} style={{ visibility: isHover && !isEditing ? "visible" : "hidden" }}>
+          <Icon type={'icon-add'} onClick={handleAddSubItem} />
           <Icon type={isDone ? 'icon-rest' : 'icon-done'} onClick={handleItemIsDone} />
           <Icon type="icon-delete" onClick={handleDeleteItem} />
-          {/* <div onClick={handleItemIsDone}>{isDone ? "返" : "D"}</div>
-          <div onClick={handleDeleteItem}>删</div> */}
         </div>
       </div>
 
-      {subItems?.map(({ id: subItemId, content: subItemContent }) => {
+      {subItemList?.map((i) => {
         return (
-          <div key={subItemId} className={styles.subItemWrap}>
-            {subItemContent}
-          </div>
+          <SubItemCard
+            key={i.id}
+            initialData={i}
+            itemId={itemId}
+            handleRemoveSubItem={handleRemoveSubItem}
+            handleRefreshSubItemList={handleRefreshSubItemList}
+          />
         );
       })}
     </div>

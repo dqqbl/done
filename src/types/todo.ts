@@ -15,11 +15,12 @@ export interface TodoListInfo {
 export interface TodoItemInfo {
   id: string;
   content: string;
-  subItems: SubItem[];
+  subItems: SubItemInfo[];
   isDone: boolean
 }
 
-export interface SubItem {
+export interface SubItemInfo {
   id: string;
-  content: { type: string };
+  content: string;
+  isDone: boolean
 }

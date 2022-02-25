@@ -1,6 +1,6 @@
 import { del, get, post, put } from "request";
 import type { Response } from "request";
-import { DocumentInfo, TodoListInfo } from "@/types/todo";
+import { DocumentInfo, TodoItemInfo, TodoListInfo } from "@/types/todo";
 
 interface CreateDocumentParams {
   name: string;
@@ -66,3 +66,26 @@ export const updateItem = (params: UpdateItemParams) => put(`/todo/item/updateIt
 
 /** 删除 doc - list - item */
 export const deleteItem = (itemId: string) => del(`/todo/item/${itemId}`);
+
+/** doc - list - item 详情 */
+export const getItemDetails = (itemId: string): Promise<Response<TodoItemInfo>> => get(`/todo/item/${itemId}`);
+
+interface CreateSubItemParams {
+  itemId: string;
+  content: string;
+}
+
+interface UpdateSubItemParams {
+  subItemId: string;
+  content?: string;
+  isDone?: boolean
+}
+
+/** 创建 doc - list - item */
+export const createSubItem = (params: CreateSubItemParams) => post(`/todo/subItem/createSubItem`, params);
+
+/** 编辑 doc - list - item */
+export const updateSubItem = (params: UpdateSubItemParams) => put(`/todo/subItem/updateSubItem`, params);
+
+/** 删除 doc - list - item */
+export const deleteSubItem = (subItemId: string) => del(`/todo/subItem/${subItemId}`);
