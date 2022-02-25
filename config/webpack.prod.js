@@ -70,7 +70,12 @@ const prodConf = {
       },
     ],
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new webpack.DefinePlugin({
+      BASE_URL: JSON.stringify("http://localhost:8000/api/"),
+    }),
+  ],
 };
 
 module.exports = merge(commonConf, prodConf);
