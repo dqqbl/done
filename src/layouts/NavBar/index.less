@@ -6,7 +6,7 @@
   background: @primary-color;
   height: @navbar-height;
   padding: @space-md @space-lg;
-  box-shadow: @primary-box-shadow;
+  box-shadow: @box-shadow-6;
   > ul {
     .flex();
     a {
@@ -18,9 +18,18 @@
   }
   .index-icon {
     cursor: pointer;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 500;
   }
   .avatar {
     width: 24px;
     height: 24px;
+  }
+  .login {
+    &:hover {
+      text-decoration: underline;
+    }
+    font-weight: 500;
   }
 }

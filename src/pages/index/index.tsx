@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "@/hooks/redux";
 import { setShowLogin } from "@/reducer/common";
 import { initialUser, updateUser } from "@/reducer/user";
 import { USER_TOKEN_INFO } from "@/constants";
+import classnames from 'classnames'
 
 const Index = () => {
   const [form] = Form.useForm();
@@ -49,11 +50,20 @@ const Index = () => {
   return (
     <div className={styles.indexRoot}>
       <div className={styles.appListWrap}>
-        {appList.map((i) => (
+        <BasicCard className={styles.appItemWrap} onClick={() => handleCardClick("/todo")}>
+          todo
+        </BasicCard>
+        <BasicCard className={classnames(styles.appItemWrap, styles.disabled)}>
+          <h4>Interactive Cinema</h4>
+        </BasicCard>
+        <BasicCard className={classnames(styles.appItemWrap, styles.disabled)}>
+          <h4>3D</h4>
+        </BasicCard>
+        {/* {appList.map((i) => (
           <BasicCard key={i.name} className={styles.appItemWrap} onClick={() => handleCardClick(i.url)}>
             {i.name}
           </BasicCard>
-        ))}
+        ))} */}
       </div>
       {showLogin && (
         <BasicCard className={styles.loginWrap}>

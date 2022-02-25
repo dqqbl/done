@@ -1,6 +1,8 @@
 module.exports = {
   /** 颜色 */
-  "primary-color": "#6667AB",
+  "primary-color-0": "#6667AB",
+  "primary-color": "@primary-color-0",
+  "primary-color-6": "fade(#6667AB, 60%)",
 
   // 背景色
   "bg-color-0": "#fff",
@@ -14,6 +16,7 @@ module.exports = {
 
   // 阴影
   "box-shadow-0": "0 2px 10px -2px fade(#000, 20%)",
+  "box-shadow-6": "0 2px 10px -2px fade(#000, 60%)",
 
   "primary-box-shadow": "@box-shadow-0",
 

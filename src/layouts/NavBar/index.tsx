@@ -33,11 +33,14 @@ const NavBar = () => {
         </li> */}
         <li>
           {avatarUrl ? (
-            <Link to="/user">
-              <div className={styles.avatar} dangerouslySetInnerHTML={{ __html: avatarUrl }}></div>
-            </Link>
+            // <Link to="/user">
+            //   <div className={styles.avatar} dangerouslySetInnerHTML={{ __html: avatarUrl }}></div>
+            // </Link>
+            <div className={styles.avatar} dangerouslySetInnerHTML={{ __html: avatarUrl }}></div>
           ) : (
-            <span onClick={handleLoginSide}>login</span>
+            <span className={styles.login} onClick={handleLoginSide}>
+              login
+            </span>
           )}
         </li>
       </ul>

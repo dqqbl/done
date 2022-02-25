@@ -108,7 +108,7 @@ const ListCard = (props: ListCardProps) => {
   }, [initItemList]);
 
   return (
-    <div className={styles.itemCardWrap} tabIndex={tabIndex} onKeyDown={handleKeyDown} onClick={handleListClick}>
+    <div className={styles.listCardWrap} tabIndex={tabIndex} onKeyDown={handleKeyDown} onClick={handleListClick}>
       <div className={styles.titleWrap} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         <DInput
           isDesc={!(curListId === listId && isEditing) || isDone}

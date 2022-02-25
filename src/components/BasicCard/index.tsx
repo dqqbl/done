@@ -11,13 +11,7 @@ interface BasicCardProps {
 }
 
 const BasicCard = (props: BasicCardProps) => {
-  const {
-    children,
-    size = "md",
-    radiusSize = "md",
-    className,
-    ...rest
-  } = props;
+  const { children, size = "md", radiusSize = "md", className, ...rest } = props;
   const basicCardSizeClass: Record<string, string> = {
     lg: styles.basicCardLg,
     md: styles.basicCardMd,
