@@ -24,6 +24,7 @@ module.exports = {
   // 全局变量
   globals: {
     React: true,
+    BASE_URL: true,
   },
   // 规则配置
   rules: {

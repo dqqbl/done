@@ -14,7 +14,9 @@
       transition: all 0.3s;
       &:hover:not(.disabled) {
         background: @primary-color;
-        color: #fff;
+        h4 {
+          color: #fff;
+        }
       }
       .flex(@justify-content: center);
       .wh(180px, 120px);
@@ -49,10 +51,23 @@
     .login-title {
       color: @primary-color;
       font-size: @font-size-1;
+      margin-bottom: 12px;
     }
     .login-btn {
       width: 100%;
       margin-top: @space-lg;
+    }
+    .sign-up {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      margin-top: 12px;
+      cursor: pointer;
+      color: #8c8c8c;
+      &:hover {
+        color: @primary-color;
+        text-decoration: underline;
+      }
     }
   }
 }

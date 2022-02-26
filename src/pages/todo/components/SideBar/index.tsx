@@ -90,7 +90,7 @@ const SideBar = (props: SideBarProps) => {
 
   return (
     <div className={styles.sideBarWrap}>
-      <div className={styles.sideBarHeader}>Directory</div>
+      <div className={styles.sideBarHeader}>目录</div>
       <div className={styles.sideBarContentWrap}>
         {/* <div className={styles.sideBarContent}> */}
         {renderList.map((i, index) => (

@@ -8,6 +8,12 @@ interface loginParams {
   password: string;
 }
 
+interface SignUpParams {
+  acount: string;
+  password: string;
+  code: string;
+}
+
 export interface tokenObj {
   accessToken: string;
   accessTokenExpiresIn: number;
@@ -16,6 +22,8 @@ export interface tokenObj {
 }
 
 export const login = (params: loginParams): Promise<Response<tokenObj>> => post("/auth/login", params);
+
+export const register = (params: SignUpParams): Promise<Response> => post("/auth/register", params);
 
 export const refreshToken = (needRefreshToken = false): Promise<Response<tokenObj>> =>
   get("/auth/refreshToken", {

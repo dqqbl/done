@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const commonConf = require("./webpack.common");
 const theme = require("../theme");
@@ -83,9 +83,9 @@ const devConf = {
   devtool: "source-map",
   plugins: [
     new webpack.DefinePlugin({
-      BASE_URL: JSON.stringify('http://localhost:8000/api/'),
-    })
-  ]
+      BASE_URL: JSON.stringify("http://localhost:8000/api/"),
+    }),
+  ],
   // devServer: {
   //   proxy: {
   //     "/api": {

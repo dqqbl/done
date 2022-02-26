@@ -39,7 +39,7 @@ const NavBar = () => {
             <div className={styles.avatar} dangerouslySetInnerHTML={{ __html: avatarUrl }}></div>
           ) : (
             <span className={styles.login} onClick={handleLoginSide}>
-              login
+              Sgin in
             </span>
           )}
         </li>

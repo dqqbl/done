@@ -76,7 +76,7 @@ export const post = instance.post;
 export const put = instance.put;
 export const del = instance.delete;
 
-export interface Response<T> {
+export interface Response<T = null> {
   code: number;
   data: T;
   msg?: string;
