@@ -29,13 +29,22 @@
     .directory-item {
       height: 100px;
       padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       // padding: @space-lg @space-xl;
       cursor: pointer;
+      border-bottom: 1px solid #d9d9d9;
       &:hover {
         background: fade(#d9d9d9, 20%);
       }
-      &:not(:last-child) {
-        border-bottom: 1px solid #d9d9d9;
+      // &:not(:last-child) {
+      //   border-bottom: 1px solid #d9d9d9;
+      // }
+      .date {
+        text-align: right;
+        font-size: 14px;
+        color: #888888;
       }
     }
   }

@@ -3,6 +3,7 @@ export interface DocumentInfo {
   id: string;
   name?: string;
   lists?: TodoListInfo[];
+  createdAt?: Date
 }
 
 export interface TodoListInfo {

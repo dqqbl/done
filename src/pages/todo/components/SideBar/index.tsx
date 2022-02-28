@@ -6,6 +6,7 @@ import { DocumentInfo } from "@/types/todo";
 import { ENTER_KEY } from "@/constants";
 import styles from "./index.less";
 import { message } from "antd";
+import dayjs from "dayjs";
 
 interface SideBarProps {
   data: DocumentInfo[];
@@ -108,7 +109,7 @@ const SideBar = (props: SideBarProps) => {
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            <span>2022.12.12</span>
+            <div className={styles.date}>{dayjs(i.createdAt).format('YYYY.MM.DD')}</div>
           </li>
         ))}
         {/* </div> */}
