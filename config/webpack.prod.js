@@ -74,7 +74,7 @@ const prodConf = {
   plugins: [
     new MiniCssExtractPlugin(),
     new webpack.DefinePlugin({
-      BASE_URL: JSON.stringify("http://localhost:8000/api/"),
+      BASE_URL: JSON.stringify("http://1.12.229.221/api/"),
     }),
   ],
 };
