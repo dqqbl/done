@@ -108,6 +108,7 @@ const SideBar = (props: SideBarProps) => {
               onBlur={handleBlur}
               onChange={handleChange}
             />
+            <span>2022.12.12</span>
           </li>
         ))}
         {/* </div> */}

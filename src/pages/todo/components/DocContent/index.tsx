@@ -1,5 +1,6 @@
 import { useEffect, memo, useState } from "react";
 import { message, Modal } from "antd";
+import dayjs from "dayjs";
 import { Icon } from "@/components";
 import { DocumentInfo, TodoListInfo } from "@/types/todo";
 import ListCard from "../ListCard";
@@ -41,7 +42,7 @@ const DocContent = (props: DocContentProps) => {
 
   const emptyList = {
     id: "newList",
-    title: new Date().toDateString(),
+    title: dayjs().format("YYYY.MM.DD"),
     items: [],
     isDone: false,
   };
